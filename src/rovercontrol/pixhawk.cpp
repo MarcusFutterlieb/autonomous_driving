@@ -35,7 +35,7 @@ void Pixhawk::disable()
     std::cout << "Pixhawk_Wrapper State: Off" << std::endl;
 
     offb_set_mode.request.custom_mode = "MANUAL";
-    if( modeClient.call(offb_set_mode) && offb_set_mode.response.success){
+    if( modeClient.call(offb_set_mode) && offb_set_mode.response.mode_sent){ //mfu_config
         ROS_INFO("Manual enabled");
     }
 
@@ -107,7 +107,7 @@ void Pixhawk::update()
         else if(ros::Time::now() - lastRequest > ros::Duration(5.0)) {
             lastRequest = ros::Time::now();
             offb_set_mode.request.custom_mode = "OFFBOARD";
-            if( modeClient.call(offb_set_mode) && offb_set_mode.response.success){
+            if( modeClient.call(offb_set_mode) && offb_set_mode.response.mode_sent){ //mfu_config
                 ROS_INFO("Offboard enabled");
             }
         }
